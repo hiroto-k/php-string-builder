@@ -1,0 +1,20 @@
+language : php
+php :
+  - "7.0"
+  - "7.1"
+  - "7.2"
+
+before_script :
+  - composer self-update
+  - composer install
+
+script :
+  - composer run test --timeout=0
+
+cache :
+  directories :
+    - vendor
+
+notifications :
+  on_success : never
+  on_failure : never
