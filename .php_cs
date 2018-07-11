@@ -32,6 +32,9 @@ $rules = [
     'array_syntax' => ['syntax' => 'short'],
     'ordered_imports' => true,
     'linebreak_after_opening_tag' => true,
+    'ordered_class_elements' => [
+        'sortAlgorithm' => 'alpha',
+    ],
 ];
 
 $finder = Finder::create()
