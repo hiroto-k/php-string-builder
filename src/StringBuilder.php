@@ -38,15 +38,13 @@ class StringBuilder implements StringBuilderInterface
     }
 
     /**
-     * Make a StringBuilder instance.
+     * Build the string.
      *
-     * @param string|object $item String or object. For object, "__toString" method must be implemented
-     *
-     * @return static
+     * @return string
      */
-    public static function make($item = '')
+    public function __toString()
     {
-        return new static($item);
+        return $this->toString();
     }
 
     /**
@@ -62,28 +60,6 @@ class StringBuilder implements StringBuilderInterface
     }
 
     /**
-     * Prepend to item.
-     *
-     * @param string $value
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function prepend($value)
-    {
-        return new static($value.$this->item);
-    }
-
-    /**
-     * Make a item upcase.
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function upcase()
-    {
-        return new static(mb_strtoupper($this->item));
-    }
-
-    /**
      * Make a item lowercase.
      *
      * @return \HirotoK\StringBuilder\StringBuilder
@@ -91,25 +67,6 @@ class StringBuilder implements StringBuilderInterface
     public function downcase()
     {
         return new static(mb_strtolower($this->item));
-    }
-
-    /**
-     * Determine if an item starts with a given substring.
-     *
-     * @param string|array $needles
-     *
-     * @return bool
-     */
-    public function startsWith($needles)
-    {
-        $needles = is_array($needles) ? $needles : [$needles];
-        foreach ($needles as $needle) {
-            if ('' !== $needle && 0 === mb_strpos($this->item, $needle)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -130,157 +87,6 @@ class StringBuilder implements StringBuilderInterface
         }
 
         return false;
-    }
-
-    /**
-     * Count item's length.
-     *
-     * @return int
-     */
-    public function length()
-    {
-        return mb_strlen($this->item);
-    }
-
-    /**
-     * Alias method of 'length'.
-     *
-     * @return int
-     */
-    public function size()
-    {
-        return call_user_func_array([$this, 'length'], func_get_args());
-    }
-
-    /**
-     * Pad a item to a certain length with another string.
-     *
-     * @see \HirotoK\StringBuilder\StringBuilder::leftPad()
-     * @see \HirotoK\StringBuilder\StringBuilder::rightPad()
-     *
-     * @param int    $length
-     * @param string $string
-     * @param int    $type   Default value is 'STR_PAD_RIGHT'
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function pad($length, $string = '', $type = STR_PAD_RIGHT)
-    {
-        return new static(str_pad($this->item, $length, $string, $type));
-    }
-
-    /**
-     * Right pad an item to a certain length with another string.
-     *
-     * @see \HirotoK\StringBuilder\StringBuilder::pad()
-     *
-     * @param int    $length
-     * @param string $string
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function rightPad($length, $string = '')
-    {
-        return $this->pad($length, $string, STR_PAD_RIGHT);
-    }
-
-    /**
-     * Left pad an item to a certain length with another string.
-     *
-     * @see \HirotoK\StringBuilder\StringBuilder::pad()
-     *
-     * @param int    $length
-     * @param string $string
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function leftPad($length, $string = '')
-    {
-        return $this->pad($length, $string, STR_PAD_LEFT);
-    }
-
-    /**
-     * Replace all occurrences of the item with the replacement string.
-     *
-     * @param string $search
-     * @param string $replace
-     * @param null   $count
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function replace($search, $replace, &$count = null)
-    {
-        return new static(str_replace($search, $replace, $this->item, $count));
-    }
-
-    /**
-     * Case-insensitive version of StringBuilder::replace().
-     *
-     * @param string $search
-     * @param string $replace
-     * @param null   $count
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function ireplace($search, $replace, &$count = null)
-    {
-        return new static(str_ireplace($search, $replace, $this->item, $count));
-    }
-
-    /**
-     * Make a item's first character uppercase.
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function ucFirst()
-    {
-        return new static(ucfirst($this->item));
-    }
-
-    /**
-     * Make item's first character lowercase.
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function lcFirst()
-    {
-        return new static(lcfirst($this->item));
-    }
-
-    /**
-     * Strip whitespace (or other characters) from the beginning and end of item.
-     *
-     * @param string $character_mask
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function trim(string $character_mask = " \t\n\r\0\x0B")
-    {
-        return new static(trim($this->item, $character_mask));
-    }
-
-    /**
-     * Strip whitespace from the end of item.
-     *
-     * @param string $character_mask
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function rtrim(string $character_mask = " \t\n\r\0\x0B")
-    {
-        return new static(rtrim($this->item, $character_mask));
-    }
-
-    /**
-     * Strip whitespace from the beginning of item.
-     *
-     * @param string $character_mask
-     *
-     * @return \HirotoK\StringBuilder\StringBuilder
-     */
-    public function ltrim(string $character_mask = " \t\n\r\0\x0B")
-    {
-        return new static(ltrim($this->item, $character_mask));
     }
 
     /**
@@ -312,6 +118,55 @@ class StringBuilder implements StringBuilderInterface
     }
 
     /**
+     * Case-insensitive version of StringBuilder::replace().
+     *
+     * @param string $search
+     * @param string $replace
+     * @param null   $count
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
+     */
+    public function ireplace($search, $replace, &$count = null)
+    {
+        return new static(str_ireplace($search, $replace, $this->item, $count));
+    }
+
+    /**
+     * Make item's first character lowercase.
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
+     */
+    public function lcFirst()
+    {
+        return new static(lcfirst($this->item));
+    }
+
+    /**
+     * Left pad an item to a certain length with another string.
+     *
+     * @see \HirotoK\StringBuilder\StringBuilder::pad()
+     *
+     * @param int    $length
+     * @param string $string
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
+     */
+    public function leftPad($length, $string = '')
+    {
+        return $this->pad($length, $string, STR_PAD_LEFT);
+    }
+
+    /**
+     * Count item's length.
+     *
+     * @return int
+     */
+    public function length()
+    {
+        return mb_strlen($this->item);
+    }
+
+    /**
      * Limit the number of characters in item.
      *
      * @param int    $limit
@@ -331,6 +186,73 @@ class StringBuilder implements StringBuilderInterface
     }
 
     /**
+     * Strip whitespace from the beginning of item.
+     *
+     * @param string $character_mask
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
+     */
+    public function ltrim(string $character_mask = " \t\n\r\0\x0B")
+    {
+        return new static(ltrim($this->item, $character_mask));
+    }
+
+    /**
+     * Make a StringBuilder instance.
+     *
+     * @param string|object $item String or object. For object, "__toString" method must be implemented
+     *
+     * @return static
+     */
+    public static function make($item = '')
+    {
+        return new static($item);
+    }
+
+    /**
+     * Pad a item to a certain length with another string.
+     *
+     * @see \HirotoK\StringBuilder\StringBuilder::leftPad()
+     * @see \HirotoK\StringBuilder\StringBuilder::rightPad()
+     *
+     * @param int    $length
+     * @param string $string
+     * @param int    $type   Default value is 'STR_PAD_RIGHT'
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
+     */
+    public function pad($length, $string = '', $type = STR_PAD_RIGHT)
+    {
+        return new static(str_pad($this->item, $length, $string, $type));
+    }
+
+    /**
+     * Prepend to item.
+     *
+     * @param string $value
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
+     */
+    public function prepend($value)
+    {
+        return new static($value.$this->item);
+    }
+
+    /**
+     * Replace all occurrences of the item with the replacement string.
+     *
+     * @param string $search
+     * @param string $replace
+     * @param null   $count
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
+     */
+    public function replace($search, $replace, &$count = null)
+    {
+        return new static(str_replace($search, $replace, $this->item, $count));
+    }
+
+    /**
      * Reverse item.
      *
      * @return \HirotoK\StringBuilder\StringBuilder
@@ -338,6 +260,33 @@ class StringBuilder implements StringBuilderInterface
     public function reverse()
     {
         return new static(strrev($this->item));
+    }
+
+    /**
+     * Right pad an item to a certain length with another string.
+     *
+     * @see \HirotoK\StringBuilder\StringBuilder::pad()
+     *
+     * @param int    $length
+     * @param string $string
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
+     */
+    public function rightPad($length, $string = '')
+    {
+        return $this->pad($length, $string, STR_PAD_RIGHT);
+    }
+
+    /**
+     * Strip whitespace from the end of item.
+     *
+     * @param string $character_mask
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
+     */
+    public function rtrim(string $character_mask = " \t\n\r\0\x0B")
+    {
+        return new static(rtrim($this->item, $character_mask));
     }
 
     /**
@@ -351,6 +300,16 @@ class StringBuilder implements StringBuilderInterface
     }
 
     /**
+     * Alias method of 'length'.
+     *
+     * @return int
+     */
+    public function size()
+    {
+        return call_user_func_array([$this, 'length'], func_get_args());
+    }
+
+    /**
      * Convert item to an array.
      *
      * @param int $length
@@ -360,6 +319,25 @@ class StringBuilder implements StringBuilderInterface
     public function split($length = 1)
     {
         return str_split($this->item, $length);
+    }
+
+    /**
+     * Determine if an item starts with a given substring.
+     *
+     * @param string|array $needles
+     *
+     * @return bool
+     */
+    public function startsWith($needles)
+    {
+        $needles = is_array($needles) ? $needles : [$needles];
+        foreach ($needles as $needle) {
+            if ('' !== $needle && 0 === mb_strpos($this->item, $needle)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -418,12 +396,34 @@ class StringBuilder implements StringBuilderInterface
     }
 
     /**
-     * Build the string.
+     * Strip whitespace (or other characters) from the beginning and end of item.
      *
-     * @return string
+     * @param string $character_mask
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
      */
-    public function __toString()
+    public function trim(string $character_mask = " \t\n\r\0\x0B")
     {
-        return $this->toString();
+        return new static(trim($this->item, $character_mask));
+    }
+
+    /**
+     * Make a item's first character uppercase.
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
+     */
+    public function ucFirst()
+    {
+        return new static(ucfirst($this->item));
+    }
+
+    /**
+     * Make a item upcase.
+     *
+     * @return \HirotoK\StringBuilder\StringBuilder
+     */
+    public function upcase()
+    {
+        return new static(mb_strtoupper($this->item));
     }
 }
