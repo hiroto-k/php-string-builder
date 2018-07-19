@@ -21,6 +21,26 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 EOS;
 
+$classElementOrder = [
+    'use_trait',
+    'constant_public',
+    'constant_protected',
+    'constant_private',
+    'property_public',
+    'property_protected',
+    'property_private',
+    'construct',
+    'destruct',
+    'magic',
+    'phpunit',
+    'method_public_static',
+    'method_protected_static',
+    'method_private_static',
+    'method_public',
+    'method_protected',
+    'method_private',
+];
+
 $rules = [
     '@PSR2' => true,
     '@Symfony' => true,
@@ -32,6 +52,10 @@ $rules = [
     'array_syntax' => ['syntax' => 'short'],
     'ordered_imports' => true,
     'linebreak_after_opening_tag' => true,
+    'ordered_class_elements' => [
+        'order' => $classElementOrder,
+        'sortAlgorithm' => 'alpha',
+    ],
 ];
 
 $finder = Finder::create()

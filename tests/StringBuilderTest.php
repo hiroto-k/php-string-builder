@@ -25,18 +25,11 @@ class StringBuilderTest extends TestCase
         $this->item = 'Test string.';
     }
 
-    public function testConstruct()
+    public function test__toString()
     {
         $sb = new StringBuilder($this->item);
-        $this->assertInstanceOf(StringBuilder::class, $sb);
-        $this->assertInstanceOf(StringBuilderInterface::class, $sb);
-    }
-
-    public function testMake()
-    {
-        $sb = StringBuilder::make($this->item);
-        $this->assertInstanceOf(StringBuilder::class, $sb);
-        $this->assertInstanceOf(StringBuilderInterface::class, $sb);
+        $this->assertEquals($this->item, $sb->__toString());
+        $this->assertEquals($sb->toString(), $sb->__toString());
     }
 
     public function testAppend()
@@ -46,18 +39,11 @@ class StringBuilderTest extends TestCase
         $this->assertEquals('test.append.', $newStr);
     }
 
-    public function testPrepend()
+    public function testConstruct()
     {
-        $sb = new StringBuilder('test.');
-        $newStr = $sb->prepend('prepend.')->toString();
-        $this->assertEquals('prepend.test.', $newStr);
-    }
-
-    public function testUpcase()
-    {
-        $sb = new StringBuilder('tesT');
-        $newStr = $sb->upcase()->toString();
-        $this->assertEquals('TEST', $newStr);
+        $sb = new StringBuilder($this->item);
+        $this->assertInstanceOf(StringBuilder::class, $sb);
+        $this->assertInstanceOf(StringBuilderInterface::class, $sb);
     }
 
     public function testDowncase()
@@ -67,40 +53,10 @@ class StringBuilderTest extends TestCase
         $this->assertEquals('test', $newStr);
     }
 
-    public function testStartsWith()
-    {
-        $sb = new StringBuilder('abcdefg');
-        $this->assertTrue($sb->startsWith('ab'));
-    }
-
-    public function testStartsWithFalse()
-    {
-        $sb = new StringBuilder('abcdefg');
-        $this->assertFalse($sb->startsWith('fg'));
-    }
-
-    public function testStartsWithByArray()
-    {
-        $sb = new StringBuilder('abcdefg');
-        $this->assertTrue($sb->startsWith(['fg', 'ab']));
-    }
-
-    public function testStartsWithFalseArray()
-    {
-        $sb = new StringBuilder('abcdefg');
-        $this->assertFalse($sb->startsWith(['fg', 'cd']));
-    }
-
     public function testEndsWith()
     {
         $sb = new StringBuilder('abcdefg');
         $this->assertTrue($sb->endsWith('fg'));
-    }
-
-    public function testEndsWithFalse()
-    {
-        $sb = new StringBuilder('abcdefg');
-        $this->assertFalse($sb->endsWith('ab'));
     }
 
     public function testEndsWithByArray()
@@ -109,114 +65,16 @@ class StringBuilderTest extends TestCase
         $this->assertTrue($sb->endsWith(['ab', 'cd', 'fg']));
     }
 
+    public function testEndsWithFalse()
+    {
+        $sb = new StringBuilder('abcdefg');
+        $this->assertFalse($sb->endsWith('ab'));
+    }
+
     public function testEndsWithFalseByArray()
     {
         $sb = new StringBuilder('abcdefg');
         $this->assertFalse($sb->endsWith(['cd', 'ab', 'ef']));
-    }
-
-    public function testLength()
-    {
-        $sb = new StringBuilder('length');
-        $this->assertEquals(6, $sb->length());
-    }
-
-    public function testSize()
-    {
-        $sb = new StringBuilder('size');
-        $this->assertEquals(4, $sb->size());
-        $this->assertEquals($sb->length(), $sb->size());
-    }
-
-    public function testPad()
-    {
-        $sb = new StringBuilder('pad');
-        $newStr = $sb->pad(10, '-')->toString();
-        $this->assertEquals('pad-------', $newStr);
-    }
-
-    public function testPadWithRight()
-    {
-        $sb = new StringBuilder('pad');
-        $newStr = $sb->pad(10, '-', STR_PAD_RIGHT)->toString();
-        $this->assertEquals('pad-------', $newStr);
-    }
-
-    public function testPadWithLeft()
-    {
-        $sb = new StringBuilder('pad');
-        $newStr = $sb->pad(10, '-', STR_PAD_LEFT)->toString();
-        $this->assertEquals('-------pad', $newStr);
-    }
-
-    public function testPadWithBoth()
-    {
-        $sb = new StringBuilder('pad');
-        $newStr = $sb->pad(10, '-', STR_PAD_BOTH)->toString();
-        $this->assertEquals('---pad----', $newStr);
-    }
-
-    public function testRightPad()
-    {
-        $sb = new StringBuilder('pad');
-        $newStr = $sb->rightPad(10, '-')->toString();
-        $this->assertEquals('pad-------', $newStr);
-    }
-
-    public function testLeftPad()
-    {
-        $sb = new StringBuilder('pad');
-        $newStr = $sb->leftPad(10, '-')->toString();
-        $this->assertEquals('-------pad', $newStr);
-    }
-
-    public function testReplace()
-    {
-        $sb = new StringBuilder('PHP,Ruby,Python');
-        $newStr = $sb->replace(',', '/')->toString();
-        $this->assertEquals('PHP/Ruby/Python', $newStr);
-    }
-
-    public function testIreplace()
-    {
-        $sb = new StringBuilder('PHP,Ruby,Python');
-        $newStr = $sb->ireplace('p', 'p')->toString();
-        $this->assertEquals('pHp,Ruby,python', $newStr);
-    }
-
-    public function testUcFirst()
-    {
-        $sb = new StringBuilder('abc');
-        $newStr = $sb->ucFirst()->toString();
-        $this->assertEquals('Abc', $newStr);
-    }
-
-    public function testLcFirst()
-    {
-        $sb = new StringBuilder('ABC');
-        $newStr = $sb->lcFirst()->toString();
-        $this->assertEquals('aBC', $newStr);
-    }
-
-    public function testTrim()
-    {
-        $sb = new StringBuilder("  \t\nTest\t\n  ");
-        $newStr = $sb->trim()->toString();
-        $this->assertEquals('Test', $newStr);
-    }
-
-    public function testRtrim()
-    {
-        $sb = new StringBuilder("  \t\nTest\t\n  ");
-        $newStr = $sb->rtrim()->toString();
-        $this->assertEquals("  \t\nTest", $newStr);
-    }
-
-    public function testLtrim()
-    {
-        $sb = new StringBuilder("   \t\nTest\t\n  ");
-        $newStr = $sb->ltrim()->toString();
-        $this->assertEquals("Test\t\n  ", $newStr);
     }
 
     public function testExplode()
@@ -237,18 +95,38 @@ class StringBuilderTest extends TestCase
         $this->assertNull($sb->indexOf('z'));
     }
 
+    public function testIreplace()
+    {
+        $sb = new StringBuilder('PHP,Ruby,Python');
+        $newStr = $sb->ireplace('p', 'p')->toString();
+        $this->assertEquals('pHp,Ruby,python', $newStr);
+    }
+
+    public function testLcFirst()
+    {
+        $sb = new StringBuilder('ABC');
+        $newStr = $sb->lcFirst()->toString();
+        $this->assertEquals('aBC', $newStr);
+    }
+
+    public function testLeftPad()
+    {
+        $sb = new StringBuilder('pad');
+        $newStr = $sb->leftPad(10, '-')->toString();
+        $this->assertEquals('-------pad', $newStr);
+    }
+
+    public function testLength()
+    {
+        $sb = new StringBuilder('length');
+        $this->assertEquals(6, $sb->length());
+    }
+
     public function testLimit()
     {
         $sb = new StringBuilder('abcdefghijklmnopqrstuvwxyz');
         $newStr = $sb->limit(10)->toString();
         $this->assertEquals('abcdefghij...', $newStr);
-    }
-
-    public function testLimitWithEnd()
-    {
-        $sb = new StringBuilder('abcdefghijklmnopqrstuvwxyz');
-        $newStr = $sb->limit(10, ',,,')->toString();
-        $this->assertEquals('abcdefghij,,,', $newStr);
     }
 
     public function testLimitOnShort()
@@ -258,6 +136,69 @@ class StringBuilderTest extends TestCase
         $this->assertEquals('abc', $newStr);
     }
 
+    public function testLimitWithEnd()
+    {
+        $sb = new StringBuilder('abcdefghijklmnopqrstuvwxyz');
+        $newStr = $sb->limit(10, ',,,')->toString();
+        $this->assertEquals('abcdefghij,,,', $newStr);
+    }
+
+    public function testLtrim()
+    {
+        $sb = new StringBuilder("   \t\nTest\t\n  ");
+        $newStr = $sb->ltrim()->toString();
+        $this->assertEquals("Test\t\n  ", $newStr);
+    }
+
+    public function testMake()
+    {
+        $sb = StringBuilder::make($this->item);
+        $this->assertInstanceOf(StringBuilder::class, $sb);
+        $this->assertInstanceOf(StringBuilderInterface::class, $sb);
+    }
+
+    public function testPad()
+    {
+        $sb = new StringBuilder('pad');
+        $newStr = $sb->pad(10, '-')->toString();
+        $this->assertEquals('pad-------', $newStr);
+    }
+
+    public function testPadWithBoth()
+    {
+        $sb = new StringBuilder('pad');
+        $newStr = $sb->pad(10, '-', STR_PAD_BOTH)->toString();
+        $this->assertEquals('---pad----', $newStr);
+    }
+
+    public function testPadWithLeft()
+    {
+        $sb = new StringBuilder('pad');
+        $newStr = $sb->pad(10, '-', STR_PAD_LEFT)->toString();
+        $this->assertEquals('-------pad', $newStr);
+    }
+
+    public function testPadWithRight()
+    {
+        $sb = new StringBuilder('pad');
+        $newStr = $sb->pad(10, '-', STR_PAD_RIGHT)->toString();
+        $this->assertEquals('pad-------', $newStr);
+    }
+
+    public function testPrepend()
+    {
+        $sb = new StringBuilder('test.');
+        $newStr = $sb->prepend('prepend.')->toString();
+        $this->assertEquals('prepend.test.', $newStr);
+    }
+
+    public function testReplace()
+    {
+        $sb = new StringBuilder('PHP,Ruby,Python');
+        $newStr = $sb->replace(',', '/')->toString();
+        $this->assertEquals('PHP/Ruby/Python', $newStr);
+    }
+
     public function testReverse()
     {
         $sb = new StringBuilder('abcd');
@@ -265,11 +206,32 @@ class StringBuilderTest extends TestCase
         $this->assertEquals('dcba', $newStr);
     }
 
+    public function testRightPad()
+    {
+        $sb = new StringBuilder('pad');
+        $newStr = $sb->rightPad(10, '-')->toString();
+        $this->assertEquals('pad-------', $newStr);
+    }
+
+    public function testRtrim()
+    {
+        $sb = new StringBuilder("  \t\nTest\t\n  ");
+        $newStr = $sb->rtrim()->toString();
+        $this->assertEquals("  \t\nTest", $newStr);
+    }
+
     public function testShuffle()
     {
         $sb = new StringBuilder('abc');
         $newStr = $sb->shuffle()->toString();
         $this->assertRegExp('/(a|b|c)/', $newStr);
+    }
+
+    public function testSize()
+    {
+        $sb = new StringBuilder('size');
+        $this->assertEquals(4, $sb->size());
+        $this->assertEquals($sb->length(), $sb->size());
     }
 
     public function testSplit()
@@ -282,6 +244,30 @@ class StringBuilderTest extends TestCase
     {
         $sb = new StringBuilder('test');
         $this->assertEquals(['te', 'st'], $sb->split(2));
+    }
+
+    public function testStartsWith()
+    {
+        $sb = new StringBuilder('abcdefg');
+        $this->assertTrue($sb->startsWith('ab'));
+    }
+
+    public function testStartsWithByArray()
+    {
+        $sb = new StringBuilder('abcdefg');
+        $this->assertTrue($sb->startsWith(['fg', 'ab']));
+    }
+
+    public function testStartsWithFalse()
+    {
+        $sb = new StringBuilder('abcdefg');
+        $this->assertFalse($sb->startsWith('fg'));
+    }
+
+    public function testStartsWithFalseArray()
+    {
+        $sb = new StringBuilder('abcdefg');
+        $this->assertFalse($sb->startsWith(['fg', 'cd']));
     }
 
     public function testStripTags()
@@ -323,10 +309,24 @@ class StringBuilderTest extends TestCase
         $this->assertEquals($this->item, $sb->toString());
     }
 
-    public function test__toString()
+    public function testTrim()
     {
-        $sb = new StringBuilder($this->item);
-        $this->assertEquals($this->item, $sb->__toString());
-        $this->assertEquals($sb->toString(), $sb->__toString());
+        $sb = new StringBuilder("  \t\nTest\t\n  ");
+        $newStr = $sb->trim()->toString();
+        $this->assertEquals('Test', $newStr);
+    }
+
+    public function testUcFirst()
+    {
+        $sb = new StringBuilder('abc');
+        $newStr = $sb->ucFirst()->toString();
+        $this->assertEquals('Abc', $newStr);
+    }
+
+    public function testUpcase()
+    {
+        $sb = new StringBuilder('tesT');
+        $newStr = $sb->upcase()->toString();
+        $this->assertEquals('TEST', $newStr);
     }
 }
