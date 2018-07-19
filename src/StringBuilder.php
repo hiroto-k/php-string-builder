@@ -105,7 +105,7 @@ class StringBuilder implements StringBuilderInterface
      * Split the item by $delimiter.
      *
      * @param string $delimiter
-     * @param int    $limit
+     * @param int $limit
      *
      * @return array
      */
@@ -118,7 +118,7 @@ class StringBuilder implements StringBuilderInterface
      * Find the position of the first occurrence of a substring in item.
      *
      * @param string|mixed $needle
-     * @param int          $offset
+     * @param int $offset
      *
      * @return int|null
      */
@@ -134,7 +134,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @param string $search
      * @param string $replace
-     * @param null   $count
+     * @param null $count
      *
      * @return \HirotoK\StringBuilder\StringBuilder
      */
@@ -158,7 +158,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @see \HirotoK\StringBuilder\StringBuilder::pad()
      *
-     * @param int    $length
+     * @param int $length
      * @param string $string
      *
      * @return \HirotoK\StringBuilder\StringBuilder
@@ -181,7 +181,7 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Limit the number of characters in item.
      *
-     * @param int    $limit
+     * @param int $limit
      * @param string $end
      *
      * @return \HirotoK\StringBuilder\StringBuilder
@@ -215,9 +215,9 @@ class StringBuilder implements StringBuilderInterface
      * @see \HirotoK\StringBuilder\StringBuilder::leftPad()
      * @see \HirotoK\StringBuilder\StringBuilder::rightPad()
      *
-     * @param int    $length
+     * @param int $length
      * @param string $string
-     * @param int    $type   Default value is 'STR_PAD_RIGHT'
+     * @param int $type Default value is 'STR_PAD_RIGHT'
      *
      * @return \HirotoK\StringBuilder\StringBuilder
      */
@@ -243,7 +243,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @param string $search
      * @param string $replace
-     * @param null   $count
+     * @param null $count
      *
      * @return \HirotoK\StringBuilder\StringBuilder
      */
@@ -267,7 +267,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @see \HirotoK\StringBuilder\StringBuilder::pad()
      *
-     * @param int    $length
+     * @param int $length
      * @param string $string
      *
      * @return \HirotoK\StringBuilder\StringBuilder
@@ -355,7 +355,7 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Return part of item.
      *
-     * @param int      $start
+     * @param int $start
      * @param int|null $length
      *
      * @return \HirotoK\StringBuilder\StringBuilder
