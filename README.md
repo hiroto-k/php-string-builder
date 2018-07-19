@@ -1,5 +1,8 @@
 # php-string-builder
 
+[![Build status](https://img.shields.io/travis/Hiroto-K/php-string-builder/master.svg?style=flat-square)](https://travis-ci.org/Hiroto-K/php-string-builder)
+[![License](https://img.shields.io/github/license/Hiroto-K/php-string-builder.svg?style=flat-square)](https://github.com/Hiroto-K/php-string-builder/blob/master/LICENSE)
+
 String builder class for PHP.
 
 ```php
