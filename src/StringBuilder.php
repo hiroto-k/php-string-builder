@@ -48,6 +48,18 @@ class StringBuilder implements StringBuilderInterface
     }
 
     /**
+     * Make a StringBuilder instance.
+     *
+     * @param string|object $item String or object. For object, "__toString" method must be implemented
+     *
+     * @return static
+     */
+    public static function make($item = '')
+    {
+        return new static($item);
+    }
+
+    /**
      * Append to item.
      *
      * @param string $value
@@ -195,18 +207,6 @@ class StringBuilder implements StringBuilderInterface
     public function ltrim(string $character_mask = " \t\n\r\0\x0B")
     {
         return new static(ltrim($this->item, $character_mask));
-    }
-
-    /**
-     * Make a StringBuilder instance.
-     *
-     * @param string|object $item String or object. For object, "__toString" method must be implemented
-     *
-     * @return static
-     */
-    public static function make($item = '')
-    {
-        return new static($item);
     }
 
     /**
