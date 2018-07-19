@@ -44,17 +44,39 @@ $classElementOrder = [
 $rules = [
     '@PSR2' => true,
     '@Symfony' => true,
-    'psr0' => false,
-    'binary_operator_spaces' => true,
-    'encoding' => true,
-    'phpdoc_no_package' => false,
-    'header_comment' => compact('header'),
-    'array_syntax' => ['syntax' => 'short'],
-    'ordered_imports' => true,
+
+    'array_syntax' => [
+        'syntax' => 'short',
+    ],
+    'combine_consecutive_issets' => true,
+    'combine_consecutive_unsets' => true,
+    'compact_nullable_typehint' => true,
+    'explicit_indirect_variable' => true,
+    'explicit_string_variable' => true,
+    'header_comment' => [
+        'header' => $header,
+    ],
     'linebreak_after_opening_tag' => true,
+    'list_syntax' => [
+        'syntax' => 'long',
+    ],
+    'multiline_whitespace_before_semicolons' => [
+        'strategy' => 'no_multi_line',
+    ],
     'ordered_class_elements' => [
         'order' => $classElementOrder,
         'sortAlgorithm' => 'alpha',
+    ],
+    'ordered_imports' => true,
+    'phpdoc_align' => [
+        'align' => 'left',
+    ],
+    'phpdoc_no_package' => false,
+    'return_type_declaration' => [
+        'space_before' => 'one',
+    ],
+    'single_line_comment_style' => [
+        'comment_types' => ['hash'],
     ],
 ];
 
