@@ -1,7 +1,7 @@
 # php-string-builder
 
-[![Build status](https://img.shields.io/travis/Hiroto-K/php-string-builder/master.svg?style=flat-square)](https://travis-ci.org/Hiroto-K/php-string-builder)
-[![License](https://img.shields.io/github/license/Hiroto-K/php-string-builder.svg?style=flat-square)](https://github.com/Hiroto-K/php-string-builder/blob/master/LICENSE)
+[![Build status](https://img.shields.io/travis/hiroto-k/php-string-builder/master.svg?style=flat-square)](https://travis-ci.org/hiroto-k/php-string-builder)
+[![License](https://img.shields.io/github/license/hiroto-k/php-string-builder.svg?style=flat-square)](https://github.com/hiroto-k/php-string-builder/blob/master/LICENSE)
 
 String builder class for PHP.
 
@@ -71,4 +71,4 @@ $sb = StringBuilder::make('Your string');
 
 ## License
 
-[MIT License](https://github.com/Hiroto-K/php-string-builder/blob/master/LICENSE "MIT License")
+[MIT License](https://github.com/hiroto-k/php-string-builder/blob/master/LICENSE "MIT License")
