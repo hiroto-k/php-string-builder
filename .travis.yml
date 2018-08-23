@@ -9,7 +9,11 @@ before_script :
   - composer install
 
 script :
-  - composer run test --timeout=0
+    - mkdir -p build/logs
+    - ./vendor/bin/phpunit
+
+after_success:
+    - travis_retry ./vendor/bin/php-coveralls -v
 
 cache :
   directories :
