@@ -1,6 +1,7 @@
 # php-string-builder
 
 [![Build Status](https://travis-ci.org/hiroto-k/php-string-builder.svg?branch=master)](https://travis-ci.org/hiroto-k/php-string-builder)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/hiroto-k/string-builder.svg)](https://packagist.org/packages/hiroto-k/string-builder)
 [![Coverage Status](https://coveralls.io/repos/github/hiroto-k/php-string-builder/badge.svg?branch=master)](https://coveralls.io/github/hiroto-k/php-string-builder?branch=master)
 [![License](https://img.shields.io/github/license/hiroto-k/php-string-builder.svg)](https://github.com/hiroto-k/php-string-builder/blob/master/LICENSE)
 
