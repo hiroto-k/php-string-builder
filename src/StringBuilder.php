@@ -11,6 +11,8 @@
 
 namespace HirotoK\StringBuilder;
 
+use Stringable;
+
 /**
  * Class StringBuilder.
  *
@@ -18,21 +20,21 @@ namespace HirotoK\StringBuilder;
  *
  * @package HirotoK\StringBuilder
  */
-class StringBuilder implements StringBuilderInterface
+class StringBuilder implements StringBuilderInterface, Stringable
 {
     /**
      * Item.
      *
      * @var string
      */
-    protected $item;
+    protected string $item;
 
     /**
      * StringBuilder constructor.
      *
-     * @param string|object $item String or object. For object, "__toString" method must be implemented
+     * @param Stringable|string $item String or object. For object, "__toString" method must be implemented
      */
-    public function __construct($item = '')
+    public function __construct(Stringable|string $item = '')
     {
         $this->item = (string) $item;
     }
@@ -42,7 +44,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }
@@ -50,11 +52,11 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Make a StringBuilder instance.
      *
-     * @param string|object $item String or object. For object, "__toString" method must be implemented
+     * @param Stringable|string $item String or object. For object, "__toString" method must be implemented
      *
      * @return static
      */
-    public static function make($item = '')
+    public static function make(Stringable|string $item = ''): static
     {
         return new static($item);
     }
@@ -62,11 +64,11 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Append to item.
      *
-     * @param string $value
+     * @param Stringable|string $value
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function append($value)
+    public function append(Stringable|string $value): static
     {
         return new static($this->item.$value);
     }
@@ -74,9 +76,9 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Make a item lowercase.
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function downcase()
+    public function downcase(): static
     {
         return new static(mb_strtolower($this->item));
     }
@@ -84,11 +86,11 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Determine if an item ends with a given substring.
      *
-     * @param string|array $needles
+     * @param string[]|string $needles
      *
      * @return bool
      */
-    public function endsWith($needles)
+    public function endsWith(array|string $needles): bool
     {
         $needles = is_array($needles) ? $needles : [$needles];
         foreach ($needles as $needle) {
@@ -104,12 +106,12 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Split the item by $delimiter.
      *
-     * @param string $delimiter
+     * @param Stringable|string $delimiter
      * @param int $limit
      *
      * @return array
      */
-    public function explode($delimiter, $limit = PHP_INT_MAX)
+    public function explode(Stringable|string $delimiter, int $limit = PHP_INT_MAX): array
     {
         return explode($delimiter, $this->item, $limit);
     }
@@ -122,7 +124,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @return int|null
      */
-    public function indexOf($needle, $offset = 0)
+    public function indexOf(Stringable|string $needle, int $offset = 0): ?int
     {
         $location = strpos($this->item, $needle, $offset);
 
@@ -132,13 +134,13 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Case-insensitive version of StringBuilder::replace().
      *
-     * @param string $search
-     * @param string $replace
+     * @param Stringable|string $search
+     * @param Stringable|string $replace
      * @param null $count
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function ireplace($search, $replace, &$count = null)
+    public function ireplace(Stringable|string $search, Stringable|string $replace, &$count = null): static
     {
         return new static(str_ireplace($search, $replace, $this->item, $count));
     }
@@ -146,9 +148,9 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Make item's first character lowercase.
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function lcFirst()
+    public function lcFirst(): static
     {
         return new static(lcfirst($this->item));
     }
@@ -156,14 +158,13 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Left pad an item to a certain length with another string.
      *
-     * @see \HirotoK\StringBuilder\StringBuilder::pad()
-     *
      * @param int $length
-     * @param string $string
+     * @param Stringable|string $string $string
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
+     * @see \HirotoK\StringBuilder\StringBuilder::pad()
      */
-    public function leftPad($length, $string = '')
+    public function leftPad(int $length, Stringable|string $string = ''): static
     {
         return $this->pad($length, $string, STR_PAD_LEFT);
     }
@@ -173,7 +174,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @return int
      */
-    public function length()
+    public function length(): int
     {
         return mb_strlen($this->item);
     }
@@ -182,11 +183,11 @@ class StringBuilder implements StringBuilderInterface
      * Limit the number of characters in item.
      *
      * @param int $limit
-     * @param string $end
+     * @param Stringable|string $end
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function limit($limit = 100, $end = '...')
+    public function limit(int $limit = 100, Stringable|string $end = '...'): static
     {
         if (mb_strwidth($this->item) <= $limit) {
             return $this;
@@ -200,11 +201,11 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Strip whitespace from the beginning of item.
      *
-     * @param string $character_mask
+     * @param Stringable|string $character_mask
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function ltrim(string $character_mask = " \t\n\r\0\x0B")
+    public function ltrim(Stringable|string $character_mask = " \t\n\r\0\x0B"): static
     {
         return new static(ltrim($this->item, $character_mask));
     }
@@ -212,16 +213,15 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Pad a item to a certain length with another string.
      *
-     * @see \HirotoK\StringBuilder\StringBuilder::leftPad()
-     * @see \HirotoK\StringBuilder\StringBuilder::rightPad()
-     *
      * @param int $length
-     * @param string $string
+     * @param Stringable|string $string $string
      * @param int $type Default value is 'STR_PAD_RIGHT'
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
+     * @see \HirotoK\StringBuilder\StringBuilder::leftPad()
+     * @see \HirotoK\StringBuilder\StringBuilder::rightPad()
      */
-    public function pad($length, $string = '', $type = STR_PAD_RIGHT)
+    public function pad(int $length, Stringable|string $string = '', int $type = STR_PAD_RIGHT): static
     {
         return new static(str_pad($this->item, $length, $string, $type));
     }
@@ -229,11 +229,11 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Prepend to item.
      *
-     * @param string $value
+     * @param Stringable|string $value
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function prepend($value)
+    public function prepend(Stringable|string $value): static
     {
         return new static($value.$this->item);
     }
@@ -241,13 +241,13 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Replace all occurrences of the item with the replacement string.
      *
-     * @param string $search
-     * @param string $replace
+     * @param Stringable|string $search
+     * @param Stringable|string $replace
      * @param null $count
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function replace($search, $replace, &$count = null)
+    public function replace(Stringable|string $search, Stringable|string $replace, &$count = null): static
     {
         return new static(str_replace($search, $replace, $this->item, $count));
     }
@@ -255,9 +255,9 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Reverse item.
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function reverse()
+    public function reverse(): static
     {
         return new static(strrev($this->item));
     }
@@ -265,14 +265,13 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Right pad an item to a certain length with another string.
      *
-     * @see \HirotoK\StringBuilder\StringBuilder::pad()
-     *
      * @param int $length
-     * @param string $string
+     * @param Stringable|string $string $string
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
+     * @see \HirotoK\StringBuilder\StringBuilder::pad()
      */
-    public function rightPad($length, $string = '')
+    public function rightPad(int $length, Stringable|string $string = '')
     {
         return $this->pad($length, $string, STR_PAD_RIGHT);
     }
@@ -280,11 +279,11 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Strip whitespace from the end of item.
      *
-     * @param string $character_mask
+     * @param Stringable|string $character_mask
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function rtrim(string $character_mask = " \t\n\r\0\x0B")
+    public function rtrim(Stringable|string $character_mask = " \t\n\r\0\x0B"): static
     {
         return new static(rtrim($this->item, $character_mask));
     }
@@ -292,9 +291,9 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Randomly shuffles item.
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function shuffle()
+    public function shuffle(): static
     {
         return new static(str_shuffle($this->item));
     }
@@ -304,7 +303,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @return int
      */
-    public function size()
+    public function size(): int
     {
         return call_user_func_array([$this, 'length'], func_get_args());
     }
@@ -316,7 +315,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @return array
      */
-    public function split($length = 1)
+    public function split(int $length = 1): array
     {
         return str_split($this->item, $length);
     }
@@ -328,7 +327,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @return bool
      */
-    public function startsWith($needles)
+    public function startsWith(array|string $needles): bool
     {
         $needles = is_array($needles) ? $needles : [$needles];
         foreach ($needles as $needle) {
@@ -343,11 +342,11 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Strip HTML and PHP tags from item.
      *
-     * @param string $allowableTags
+     * @param Stringable|string $allowableTags
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function stripTags($allowableTags = '')
+    public function stripTags(Stringable|string $allowableTags = ''): static
     {
         return new static(strip_tags($this->item, $allowableTags));
     }
@@ -358,9 +357,9 @@ class StringBuilder implements StringBuilderInterface
      * @param int $start
      * @param int|null $length
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function subStr($start, $length = null)
+    public function subStr(int $start, int $length = null): static
     {
         return new static(mb_substr($this->item, $start, $length));
     }
@@ -370,7 +369,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @return float
      */
-    public function toFloat()
+    public function toFloat(): float
     {
         return floatval($this->item);
     }
@@ -380,7 +379,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @return int
      */
-    public function toInt()
+    public function toInt(): int
     {
         return intval($this->item);
     }
@@ -390,7 +389,7 @@ class StringBuilder implements StringBuilderInterface
      *
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return $this->item;
     }
@@ -398,11 +397,11 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Strip whitespace (or other characters) from the beginning and end of item.
      *
-     * @param string $character_mask
+     * @param Stringable|string $character_mask
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function trim(string $character_mask = " \t\n\r\0\x0B")
+    public function trim(Stringable|string $character_mask = " \t\n\r\0\x0B"): static
     {
         return new static(trim($this->item, $character_mask));
     }
@@ -410,9 +409,9 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Make a item's first character uppercase.
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function ucFirst()
+    public function ucFirst(): static
     {
         return new static(ucfirst($this->item));
     }
@@ -420,9 +419,9 @@ class StringBuilder implements StringBuilderInterface
     /**
      * Make a item upcase.
      *
-     * @return \HirotoK\StringBuilder\StringBuilder
+     * @return StringBuilder
      */
-    public function upcase()
+    public function upcase(): static
     {
         return new static(mb_strtoupper($this->item));
     }
