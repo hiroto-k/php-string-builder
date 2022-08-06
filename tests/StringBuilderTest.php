@@ -15,21 +15,11 @@ use PHPUnit\Framework\TestCase;
 
 class StringBuilderTest extends TestCase
 {
-    /**
-     * @var string
-     */
     protected string $item;
 
-    public function setUp(): void
+    public function setUp() : void
     {
         $this->item = 'Test string.';
-    }
-
-    public function testToString()
-    {
-        $sb = new StringBuilder($this->item);
-        $this->assertEquals($this->item, $sb->__toString());
-        $this->assertEquals($sb->toString(), $sb->__toString());
     }
 
     public function testAppend()
@@ -301,6 +291,13 @@ class StringBuilderTest extends TestCase
     {
         $sb = new StringBuilder('1');
         $this->assertEquals(1, $sb->toInt());
+    }
+
+    public function testToString()
+    {
+        $sb = new StringBuilder($this->item);
+        $this->assertEquals($this->item, $sb->__toString());
+        $this->assertEquals($sb->toString(), $sb->__toString());
     }
 
     public function testTrim()
