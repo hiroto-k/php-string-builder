@@ -1,0 +1,48 @@
+name: Test
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [7.0, 7.1, 7.2, 7.3, 7.4]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Ubuntu Version
+        run: cat /etc/os-release
+
+      - name: Use PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@2.16.0
+        with:
+          php-version: ${{ matrix.php-version }}
+
+      - name: Cache composer vendor
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-composer-vendor
+        with:
+          path: vendor
+          key: test-${{ env.cache-name }}-${{ hashFiles('composer.lock') }}
+          restore-keys: |
+            test-${{ env.cache-name }}-${{ hashFiles('composer.lock') }}
+            test-${{ env.cache-name }}-
+            test-
+
+      - run: composer self-update
+      - run: composer install
+      - run: mkdir -p build/logs
+      - run: ./vendor/bin/phpunit
+
+      - name: Slack Notification
+        uses: homoluctus/slatify@v1.6
+        if: failure()
+        with:
+          job_name: '*${{ github.workflow }}*'
+          type: ${{ job.status }}
+          icon_emoji: ":octocat:"
+          url: ${{ secrets.SLACK_WEBHOOK }}
