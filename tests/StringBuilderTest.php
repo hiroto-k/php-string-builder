@@ -18,9 +18,9 @@ class StringBuilderTest extends TestCase
     /**
      * @var string
      */
-    protected $item;
+    protected string $item;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->item = 'Test string.';
     }
@@ -224,7 +224,7 @@ class StringBuilderTest extends TestCase
     {
         $sb = new StringBuilder('abc');
         $newStr = $sb->shuffle()->toString();
-        $this->assertRegExp('/(a|b|c)/', $newStr);
+        $this->assertMatchesRegularExpression('/(a|b|c)/', $newStr);
     }
 
     public function testSize()
@@ -301,12 +301,6 @@ class StringBuilderTest extends TestCase
     {
         $sb = new StringBuilder('1');
         $this->assertEquals(1, $sb->toInt());
-    }
-
-    public function testToString()
-    {
-        $sb = new StringBuilder($this->item);
-        $this->assertEquals($this->item, $sb->toString());
     }
 
     public function testTrim()
