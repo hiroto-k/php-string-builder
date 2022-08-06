@@ -1,7 +1,6 @@
 # php-string-builder
 
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/hiroto-k/string-builder.svg)](https://packagist.org/packages/hiroto-k/string-builder)
-[![Coverage Status](https://coveralls.io/repos/github/hiroxto/php-string-builder/badge.svg?branch=master)](https://coveralls.io/github/hiroxto/php-string-builder?branch=master)
 [![License](https://img.shields.io/github/license/hiroxto/php-string-builder.svg)](https://github.com/hiroxto/php-string-builder/blob/master/LICENSE)
 
 String builder class for PHP.
