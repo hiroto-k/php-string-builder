@@ -3,7 +3,7 @@
 /*
  * This file is part of StringBuilder.
  *
- * (c) Hiroto Kitazawa <hiro.yo.yo1610@gmail.com>
+ * (c) hiroxto <hiroxto@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,7 +15,7 @@ use PhpCsFixer\Finder;
 $header = <<<'EOS'
 This file is part of StringBuilder.
 
-(c) Hiroto Kitazawa <hiro.yo.yo1610@gmail.com>
+(c) hiroxto <hiroxto@gmail.com>
 
 For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
@@ -76,12 +76,11 @@ $rules = [
     ],
     'no_alternative_syntax' => true,
     'no_null_property_initialization' => true,
-    'no_short_echo_tag' => true,
     'no_useless_else' => true,
     'not_operator_with_successor_space' => true,
     'ordered_class_elements' => [
         'order' => $classElementOrder,
-        'sortAlgorithm' => 'alpha',
+        'sort_algorithm' => 'alpha',
     ],
     'ordered_imports' => true,
     'phpdoc_align' => [
@@ -102,7 +101,7 @@ $finder = Finder::create()
     ->exclude('vendor')
     ->in(__DIR__);
 
-return Config::create()
+return (new Config())
     ->setRules($rules)
     ->setFinder($finder)
     ->setUsingCache(true);

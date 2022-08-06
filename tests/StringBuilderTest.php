@@ -3,7 +3,7 @@
 /*
  * This file is part of StringBuilder.
  *
- * (c) Hiroto Kitazawa <hiro.yo.yo1610@gmail.com>
+ * (c) hiroxto <hiroxto@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -15,21 +15,11 @@ use PHPUnit\Framework\TestCase;
 
 class StringBuilderTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    protected $item;
+    protected string $item;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->item = 'Test string.';
-    }
-
-    public function test__toString()
-    {
-        $sb = new StringBuilder($this->item);
-        $this->assertEquals($this->item, $sb->__toString());
-        $this->assertEquals($sb->toString(), $sb->__toString());
     }
 
     public function testAppend()
@@ -224,7 +214,7 @@ class StringBuilderTest extends TestCase
     {
         $sb = new StringBuilder('abc');
         $newStr = $sb->shuffle()->toString();
-        $this->assertRegExp('/(a|b|c)/', $newStr);
+        $this->assertMatchesRegularExpression('/(a|b|c)/', $newStr);
     }
 
     public function testSize()
@@ -306,7 +296,8 @@ class StringBuilderTest extends TestCase
     public function testToString()
     {
         $sb = new StringBuilder($this->item);
-        $this->assertEquals($this->item, $sb->toString());
+        $this->assertEquals($this->item, $sb->__toString());
+        $this->assertEquals($sb->toString(), $sb->__toString());
     }
 
     public function testTrim()

@@ -1,25 +1,23 @@
 {
     "name": "hiroto-k/string-builder",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "String builder class for PHP.",
     "keywords": ["string", "builder"],
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Hiroto Kitazawa",
-            "email": "hiro.yo.yo1610@gmail.com",
-            "homepage": "https://hiroto-k.net/",
-            "role": "developer"
+            "name": "hiroxto",
+            "email": "hiroxto@gmail.com"
         }
     ],
     "require": {
-        "php": "^7.0",
+        "php": "^8.0",
         "ext-mbstring": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.5",
-        "friendsofphp/php-cs-fixer": "^2.12"
+        "phpunit/phpunit": "^9.5",
+        "friendsofphp/php-cs-fixer": "^3.9"
     },
     "autoload": {
         "psr-4": {
